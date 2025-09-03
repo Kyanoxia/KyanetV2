@@ -1,0 +1,50 @@
+.kfooter {
+    left: 0px;
+    right: 0px;
+    padding: 20px 20px;
+    margin-top: auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 0px;
+    place-items: center stretch;
+}
+
+.kfooter * {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    color: #A6A6A6;
+    text-decoration: none;
+
+    font-size: .8rem;
+}
+
+.kfooter > span {
+    text-align: right;
+    justify-content: center;
+}
+
+.kfooter > .hstack {
+    justify-content: center;
+}
+
+.footer-separator {
+    height: 100%;
+    width: 1px;
+    background-color: #A6A6A6;
+
+    justify-self: center;
+}
+
+.footlinks {
+    display: grid;
+    grid-template-columns: 1fr 0.25fr 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+
+    align-items: center;
+}

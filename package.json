@@ -1,14 +1,25 @@
 {
-  "name": "",
+  "name": "kcon-v2",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host --port 30000",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.12.0"
+    "@astrojs/vercel": "^8.2.2",
+    "@atproto/api": "^0.15.26",
+    "@atproto/oauth-client-browser": "^0.3.28",
+    "astro": "^5.12.0",
+    "bootstrap-icons": "^1.13.1",
+    "fs": "^0.0.1-security",
+    "jarallax": "^2.2.1",
+    "node-fetch": "^3.3.2",
+    "title-case": "^4.3.2"
+  },
+  "devDependencies": {
+    "vite-plugin-devtools-json": "^0.3.0"
   }
 }

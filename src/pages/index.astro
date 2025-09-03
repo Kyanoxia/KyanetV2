@@ -1,11 +1,132 @@
 ---
-import Welcome from '../components/Welcome.astro';
+/*          IMPORTS          */
+import Bluesky from '@bootstrap-svg/bluesky.svg';
+import Discord from '@bootstrap-svg/discord.svg';
+import GitHub from '@bootstrap-svg/github.svg';
+import Kya from '../assets/Kyanoxia.svg';
+
+/*          LAYOUTS          */
 import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Import CSS Per Page
+import "../styles/index.css";
+import KHamburger from '~/components/KHamburger.astro';
+import ATProto from '~/components/ATProto.astro';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="The Kyanet", description="An Introduction", favicon="favicon.svg", image="favicon.svg", color="#FF1464">
+    <script>
+        import { BrowserOAuthClient, OAuthSession } from '@atproto/oauth-client-browser'
+
+        const client = await BrowserOAuthClient.load({
+            clientId: 'https://kyanoxia.com/oauth/client-metadata.json',
+            handleResolver: 'https://bsky.social/',
+            responseMode: 'query',
+        });
+
+        const result: undefined | { session: OAuthSession; state?: string | null } = await client.init();
+
+        if (result) {
+            const { session, state } = result;
+
+            if (state != null) {
+                console.log(`${session.sub} was successfully authenticated (state: ${state})`);
+            }
+            else {
+                console.log(`${session.sub} was restored (last active session)`);
+            }
+        }
+        else {
+            console.log("Result is undefined! User not authenticated");
+        }
+
+        if (result == null) { // User not authenticated yet
+            // If not authenticated, redirect to the OAuth server for login/authorization
+            const atplog = document.querySelectorAll('.atp-login');
+            atplog.forEach(element => {
+                element.addEventListener('click', async () => {
+                    try {
+                        await client.signIn('https://bsky.social', {
+                            prompt: 'login',
+                            ui_locales: 'en-US en', // Only supported by some OAuth servers (requires OpenID Connect support + i18n support)
+                            signal: new AbortController().signal, // Optional, allows to cancel the sign in (and destroy the pending authorization, for better security)
+                        });
+
+                        console.log('Never executed')
+                    } catch (err) {
+                        console.log('The user aborted the authorization process by navigating "back"')
+                    }
+                });
+            });
+        } else {
+            // User is already authenticated (or callback is being handled)
+            console.log('User already authenticated or callback in progress:', result);
+        }
+    </script>
+    <div class="page-content">
+        <div class="navbar">
+            <a href="http://bsky.app/profile/did:plc:cocpebhxzqhh2vxsp4ivzdbr/" class="profileimage">
+                <img src="/api/getProfileImage" alt="Bluesky Profile Image">
+            </a>
+            <div class="navlinks">
+                <a href="#">HOME</a>
+                <a href="#">ABOUT</a>
+                <a href="#">CONTACT</a>
+            </div>
+            <Kya class="kya" fill="#d5f2e3" width="16" height="16"/>
+        </div>
+        <div class="header">
+            <h1 class="head-name">Kyanoxia Rivera</h1>
+            <span class="subheader">Making Random Shit for Random People</span>
+        </div>
+        <div class="socials">
+            <ul>
+                <li>
+                    <a class="social-link" href="https://bsky.app/profile/did:plc:cocpebhxzqhh2vxsp4ivzdbr">
+                        <Bluesky fill="#d5f2e3" />
+                    </a>
+                </li>
+                <li>
+                    <a class="social-link" href="/join">
+                        <Discord fill="#d5f2e3" />
+                    </a>
+                </li>
+                <li>
+                    <a class="social-link" href="https://github.com/kyanoxia">
+                        <GitHub fill="#d5f2e3" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="work">
+            <h2>My Skills</h2>
+            <KHamburger color="#73ba9b" title="Digital">
+                <ul style="list-style-position: inside;">
+                    <li>Programming</li>
+                    <ul style="margin-left: 1rem;">
+                        <li>Astro</li>
+                        <li>NodeJS</li>
+                        <li>TypeScript</li>
+                        <li>A bunch of other stuff</li>
+                    </ul>
+                    <li>Blender</li>
+                    <li>Affinity</li>
+                    <li>FL Studio</li>
+                    <li>Ableton</li>
+                    <li>DaVinci Resolve</li>
+                </ul>
+            </KHamburger>
+            <KHamburger color="#73ba9b" title="Physical">
+                <ul style="list-style-position: inside;">
+                    <li>Money Management</li>
+                    <li>PC Building</li>
+                    <li>Server Building</li>
+                    <li>Audio Routing</li>
+                    <li>Video Routing</li>
+                </ul>
+            </KHamburger>
+        </div>
+        <span style="color: #73ba9b; font-size: small; margin-bottom: 1rem;">This button won't do anything unless you're hosting the site in a special way...</span>
+        <ATProto className='atp-login' style="align-self: center"/>
+    </div>
 </Layout>

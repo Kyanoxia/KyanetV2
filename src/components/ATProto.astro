@@ -1,0 +1,50 @@
+---
+import ATmosphere from '@bootstrap-svg/at.svg';
+
+export interface Props {
+  className: string;
+  style?: string;
+}
+
+const { className, style } = Astro.props;
+---
+<div class={className + " atmosphere"} style={style}>
+    <ATmosphere fill="#3b82f6"/>
+    <span>Sign in with ATProtocol</span>
+    <style>
+        .atmosphere {
+            width: max-content;
+            background: #3b82f6;
+
+            padding: 0rem 0.75rem 0rem 0.1rem;
+            gap: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border: 2px solid #5f9cff;
+            border-radius: 400rem;
+
+            cursor: pointer;
+
+            font-family: ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+        }
+
+        .atmosphere * {
+            font-family: ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+            color: white;
+            font-weight: 300;
+        }
+
+        .atmosphere > span {
+            text-align: center;
+        }
+
+        .atmosphere > svg {
+            fill: white;
+            height: 2rem;
+            width: auto;
+        }
+
+    </style>
+</div>

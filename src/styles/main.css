@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+ 
+:root {
+    interpolate-size: allow-keywords;
+
+    --color-bg: #01110a;
+    --color-fg: #003e1f;
+    --color-primary: #73ba9b;
+    --color-light: #d5f2e3;
+    --color-warn: #ba2d0b;
+}
+
+* {
+    font-family: "JetBrains Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+
+    text-align: center;
+    line-height: 2em;
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.light {
+    font-weight: light;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.vstack {
+    display: flex;
+    flex-direction: column;
+}
+
+.hstack {
+    display: flex;
+    flex-direction: row;
+}
+
+.header-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    position: relative;
+    z-index: -1;
+}
+
+h1 {
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+
+    letter-spacing: 0.5ch;
+
+    margin: 0;
+}
+
+h2 {
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+
+    letter-spacing: 0.5ch;
+
+    margin-bottom: 1em;
+}
+
+p {
+    font-weight: 300;
+}
+
+.link {
+    color: black;
+    text-decoration: none;
+
+    position: relative;
+}
+
+.link::after {
+    content: '';
+    position: absolute;
+    display: inline-block;
+
+    width: 0;
+    height: 2px;
+
+    background-color: black;
+
+    left: 0;
+    bottom: 0px;
+
+    transition: all 200ms ease;
+}
+
+.link::before {
+    content: '';
+    position: absolute;
+    display: inline-block;
+
+    width: 100%;
+    height: 1px;
+
+    background-color: black;
+
+    left: 0;
+    bottom: 0px;
+
+    transition: all 200ms ease;
+}
+
+.link:hover::after {
+    width: 100%;
+}
+
+.fullwidth {
+    width: 100%;
+}
+
+.fullheight {
+    height: 100%;
+}

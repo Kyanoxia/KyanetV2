@@ -1,0 +1,40 @@
+---
+interface Props {
+    page: string;
+    color: string;
+};
+
+import "./KFooter.css";
+import path from 'path';
+import { titleCase } from 'title-case';
+
+const pages = import.meta.glob('/src/pages/*.astro', {query: '?url', import: 'default'});
+const { page, color } = Astro.props;
+
+const socials = {
+	Bluesky: "https://bsky.app/profile/did:plc:cocpebhxzqhh2vxsp4ivzdbr",
+	YouTube: "https://youtube.com/@kyanoxia",
+    Discord: "https://kyanoxia.com/join",
+}
+---
+<div class="kfooter" style=`background-color: ${color};`>
+    <span id="copyright" style="text-align: left;">Copyright © Kyanoxia 2024 - {new Date().getUTCFullYear()}</span>
+    <div class="footlinks" style="height: 100%;">
+        <div class="vstack">
+            {
+                Object.keys(pages).map((x) => (
+                    <a href=`/${path.basename(x, ".astro") == "index" ? "" : path.basename(x, ".astro")}` class="footerlink" style="text-align: right;">{titleCase(path.basename(x, ".astro"))}</a>
+                ))
+            }
+        </div>
+        <div class="footer-separator"/>
+        <div class="vstack" style="text-align: left;">
+            {
+                Object.entries(socials).map((x) => (
+                    <a class="footerlink" style="text-align: left;" href={x[1]}>{x[0]}</a>
+                ))
+            }
+        </div>
+    </div>
+    <span id="page" style="text-align; right;">{page}</span>
+</div>

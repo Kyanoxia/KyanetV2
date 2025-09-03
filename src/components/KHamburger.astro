@@ -1,0 +1,76 @@
+---
+interface Props {
+    title: string;
+    color: string;
+};
+
+const { title, color } = Astro.props;
+---
+<div class="khamburger">
+    <div class="title">
+        <span>{title}</span>
+    </div>
+    <div class="content">
+        <div class="separator" />
+        <div class="slot">
+            <slot />
+        </div>
+    </div>
+
+    <style define:vars={{color}}>
+        .khamburger {
+            background-color: var(--color);
+        }
+
+        .title {
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .open .content {
+            height: auto;
+            padding-bottom: 1rem;
+        }
+
+        .separator {
+            width: 0.1rem;
+            align-self: stretch;
+
+            background-color: #003e1f;
+        }
+
+        .content {
+            height: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+
+            gap: 1rem;
+            padding-left: 1rem;
+            padding-bottom: 0;
+
+            transition: all 300ms ease;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const khamburger = document.querySelectorAll('.khamburger');
+            khamburger.forEach(element => {
+                const title = element.querySelector("div.title");
+                title?.addEventListener('click', () => {
+                    if (element.classList.contains("open")) {
+                        element.classList.remove("open");
+                    }
+                    else {
+                        element.classList.add("open");
+                    }
+                });
+            });
+        });
+
+    </script>
+</div>

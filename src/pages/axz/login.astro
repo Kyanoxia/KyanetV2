@@ -1,0 +1,50 @@
+---
+import Layout from "~/layouts/Layout.astro";
+
+import Ford from "public/Ford_logo_flat.svg";
+
+import "../../styles/axz/login.css";
+---
+<Layout title="AXZ Developer Preview", description="A project I made for work - a 'working' preview of my AXZ login flow mockups", favicon="favicon.svg", image="favicon.svg", color="#FF1464">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <div class="page-content">
+        <div class="background">
+            <img class="no-highlight" src="https://www.mustangspecs.com/wp-content/uploads/2022/01/2020-Ford-Mustang-Cobra-Jet-1400-Concept-005-2160-scaled.jpg" alt="Ford Mustang"/>
+        </div>
+        <div class="login">
+            <div class="header">
+                <Ford width="10rem" height="auto" fill="red"/>
+                <h1>Sign In</h1>
+            </div>
+            <div class="login-forms">
+                <div class="username">
+                    <i data-text="Your User/CDS ID would be the ID you used while at Ford" class="bi bi-info-circle-fill infocir"></i>
+                    <input class="username" type="text" placeholder="">
+                    <span>User/CDS ID</span>
+                </div>
+                <div class="password">
+                    <input class="password" type="password" placeholder="">
+                    <span>Password</span>
+                </div>
+            </div>
+            <div class="resetlinks hidden">
+                <h3>Password Reset Links</h3>
+                <a href="/axz/retireepwreset">Retirees - North America Only</a>
+                <a href="https://changepassword.ford.com">Dealers, Active Employees, Other</a>
+            </div>
+            <div class="interactions">
+                <span id="passwdresetlinks">Forgot your Password?</span>
+                <a class="next" href="https://www.axz.ford.com">NEXT</a>
+            </div>
+        </div>
+        <sub class="copy">Copyleft © 2025 Kyanoxia - Authentication Services</sub>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById("passwdresetlinks")?.addEventListener('click', () => {
+                document.getElementsByClassName("resetlinks")[0].classList.remove("hidden");
+            })
+        });
+    </script>
+</Layout>
