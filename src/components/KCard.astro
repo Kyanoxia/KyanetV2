@@ -1,0 +1,64 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+    title: string;
+    subtitle: string;
+    color: string;
+    src: string | ImageMetadata | Promise<{ default: ImageMetadata }>;
+    href: string;
+};
+
+const { title, subtitle, color, src, href } = Astro.props;
+---
+<a href={href} class="kcard">
+    {
+        typeof src === 'string' 
+        ? <Image class="image" src={src} alt={title} inferSize={true} />
+        : <Image class="image" src={src} alt={title} />
+    }
+    <div class="title">
+        <span>{title}</span>
+        <p>{subtitle}</p>
+    </div>
+
+    <style define:vars={{color}}>
+        .kcard {
+            background-color: var(--color);
+            display: flex;
+            flex-direction: column;
+
+            width: 15rem;
+
+            justify-content: space-between;
+
+            padding: 1rem;
+        }
+
+        .image {
+            width: 100%;
+            height: auto;
+
+            margin-bottom: 2rem;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title > span {
+            font-size: large;
+        }
+
+        .title > p {
+            color: var(--color-primary);
+            font-size: small;
+        }
+    </style>
+</a>

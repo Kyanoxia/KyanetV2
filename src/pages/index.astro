@@ -1,27 +1,44 @@
 ---
 /*          IMPORTS          */
-import Bluesky from '@bootstrap-svg/bluesky.svg';
-import Discord from '@bootstrap-svg/discord.svg';
-import GitHub from '@bootstrap-svg/github.svg';
-import Kya from '../assets/Kyanoxia.svg';
+import Bluesky from "@bootstrap-svg/bluesky.svg";
+import Discord from "@bootstrap-svg/discord.svg";
+import GitHub from "@bootstrap-svg/github.svg";
+import LinkedIn from "@bootstrap-svg/linkedin.svg";
+import Kya from "@public/svg/Kyanoxia.svg";
 
 /*          LAYOUTS          */
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 
-// Import CSS Per Page
+/*           STYLES          */
 import "../styles/index.css";
-import KHamburger from '~/components/KHamburger.astro';
-import ATProto from '~/components/ATProto.astro';
+
+/*         COMPONENTS        */
+import ATProto from "~/components/ATProto.astro";
+import KCard from "~/components/KCard.astro";
+
+const enOrdinalRules = new Intl.PluralRules("en-US", { type: "ordinal" });
+
+const suffixes = new Map([
+    ["one", "st"],
+    ["two", "nd"],
+    ["few", "rd"],
+    ["other", "th"],
+]);
+const formatOrdinals = (n: number) => {
+    const rule = enOrdinalRules.select(n);
+    const suffix = suffixes.get(rule);
+    return `${n}${suffix}`;
+};
 ---
 
 <Layout title="The Kyanet", description="An Introduction", favicon="favicon.svg", image="favicon.svg", color="#FF1464">
     <script>
-        import { BrowserOAuthClient, OAuthSession } from '@atproto/oauth-client-browser'
+        import { BrowserOAuthClient, OAuthSession } from "@atproto/oauth-client-browser";
 
         const client = await BrowserOAuthClient.load({
-            clientId: 'https://kyanoxia.com/oauth/client-metadata.json',
-            handleResolver: 'https://bsky.social/',
-            responseMode: 'query',
+            clientId: "https://kyanoxia.com/oauth/client-metadata.json",
+            handleResolver: "https://bsky.social/",
+            responseMode: "query",
         });
 
         const result: undefined | { session: OAuthSession; state?: string | null } = await client.init();
@@ -30,59 +47,81 @@ import ATProto from '~/components/ATProto.astro';
             const { session, state } = result;
 
             if (state != null) {
-                console.log(`${session.sub} was successfully authenticated (state: ${state})`);
+                console.log(
+                    `${session.sub} was successfully authenticated (state: ${state})`,
+                );
+            } else {
+                console.log(
+                    `${session.sub} was restored (last active session)`,
+                );
             }
-            else {
-                console.log(`${session.sub} was restored (last active session)`);
-            }
-        }
-        else {
+        } else {
             console.log("Result is undefined! User not authenticated");
         }
 
-        if (result == null) { // User not authenticated yet
+        if (result == null) {
+            // User not authenticated yet
             // If not authenticated, redirect to the OAuth server for login/authorization
-            const atplog = document.querySelectorAll('.atp-login');
-            atplog.forEach(element => {
-                element.addEventListener('click', async () => {
+            const atplog = document.querySelectorAll(".atp-login");
+            atplog.forEach((element) => {
+                element.addEventListener("click", async () => {
                     try {
-                        await client.signIn('https://bsky.social', {
-                            prompt: 'login',
-                            ui_locales: 'en-US en', // Only supported by some OAuth servers (requires OpenID Connect support + i18n support)
+                        await client.signIn("https://bsky.social", {
+                            prompt: "login",
+                            ui_locales: "en-US en", // Only supported by some OAuth servers (requires OpenID Connect support + i18n support)
                             signal: new AbortController().signal, // Optional, allows to cancel the sign in (and destroy the pending authorization, for better security)
                         });
 
-                        console.log('Never executed')
+                        console.log("Never executed");
                     } catch (err) {
-                        console.log('The user aborted the authorization process by navigating "back"')
+                        console.log(
+                            'The user aborted the authorization process by navigating "back"',
+                        );
                     }
                 });
             });
         } else {
             // User is already authenticated (or callback is being handled)
-            console.log('User already authenticated or callback in progress:', result);
+            console.log(
+                "User already authenticated or callback in progress:",
+                result,
+            );
         }
     </script>
     <div class="page-content">
         <div class="navbar">
-            <a href="http://bsky.app/profile/did:plc:cocpebhxzqhh2vxsp4ivzdbr/" class="profileimage">
-                <img src="/api/getProfileImage" alt="Bluesky Profile Image">
+            <a
+                href="http://bsky.app/profile/did:plc:cocpebhxzqhh2vxsp4ivzdbr/"
+                class="profileimage"
+            >
+                <img src="/api/getProfileImage" alt="Bluesky Profile Image" />
             </a>
             <div class="navlinks">
-                <a href="#">HOME</a>
-                <a href="#">ABOUT</a>
-                <a href="#">CONTACT</a>
+                <a href="/">HOME</a>
+                <a href="">ABOUT</a>
+                <a href="contact">CONTACT</a>
             </div>
-            <Kya class="kya" fill="#d5f2e3" width="16" height="16"/>
+            <Kya class="kya" fill="#d5f2e3" width="16" height="16" />
         </div>
         <div class="header">
             <h1 class="head-name">Kyanoxia Rivera</h1>
-            <span class="subheader">Making Random Shit for Random People</span>
+            <span class="subheader">{formatOrdinals(new Date().getFullYear() - 2025)} year computer science student</span>
         </div>
         <div class="socials">
             <ul>
                 <li>
-                    <a class="social-link" href="https://bsky.app/profile/did:plc:cocpebhxzqhh2vxsp4ivzdbr">
+                    <a
+                        class="social-link"
+                        href="https://linkedin.com/in/kyanoxia"
+                    >
+                        <LinkedIn fill="#d5f2e3" />
+                    </a>
+                </li>
+                <li>
+                    <a
+                        class="social-link"
+                        href="https://bsky.app/profile/did:plc:cocpebhxzqhh2vxsp4ivzdbr"
+                    >
                         <Bluesky fill="#d5f2e3" />
                     </a>
                 </li>
@@ -99,34 +138,17 @@ import ATProto from '~/components/ATProto.astro';
             </ul>
         </div>
         <div class="work">
-            <h2>My Skills</h2>
-            <KHamburger color="#73ba9b" title="Digital">
-                <ul style="list-style-position: inside;">
-                    <li>Programming</li>
-                    <ul style="margin-left: 1rem;">
-                        <li>Astro</li>
-                        <li>NodeJS</li>
-                        <li>TypeScript</li>
-                        <li>A bunch of other stuff</li>
-                    </ul>
-                    <li>Blender</li>
-                    <li>Affinity</li>
-                    <li>FL Studio</li>
-                    <li>Ableton</li>
-                    <li>DaVinci Resolve</li>
-                </ul>
-            </KHamburger>
-            <KHamburger color="#73ba9b" title="Physical">
-                <ul style="list-style-position: inside;">
-                    <li>Money Management</li>
-                    <li>PC Building</li>
-                    <li>Server Building</li>
-                    <li>Audio Routing</li>
-                    <li>Video Routing</li>
-                </ul>
-            </KHamburger>
+            <h2>What I'm Working On</h2>
+            <span class="subheader">Click each card to go to its homepage</span>
+            <div class="cards">
+                <KCard title="Orchid" subtitle="A Discord Bot" src="https://github.com/Kyanoxia/orchid/blob/main/assets/Logo.png?raw=true" href="https://github.com/kyanoxia/orchid" color="var(--color-fg)"/>
+                <KCard title="DTMunity" subtitle="Desktop Music Unity" src="https://dtmunity.com/_astro/DTM_SQR.CswDl6_1.png" href="https://dtmunity.com/" color="var(--color-fg)"/>
+                <KCard title="ATProto Things" subtitle="Nuggets of Wisdom" src="https://kyanoxia.com/img/portfolio/render/deck.png" href="https://bsky.app/profile/did:plc:cocpebhxzqhh2vxsp4ivzdbr" color="var(--color-fg)"/>
+            </div>
         </div>
-        <span style="color: #73ba9b; font-size: small; margin-bottom: 1rem;">This button won't do anything unless you're hosting the site in a special way...</span>
-        <ATProto className='atp-login' style="align-self: center"/>
+        <span style="color: #73ba9b; font-size: small; margin-bottom: 1rem;"
+            >This button won't do anything and is there only to test OAuth</span
+        >
+        <ATProto className="atp-login" style="align-self: center" />
     </div>
 </Layout>

@@ -6,7 +6,8 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"],
-      "@bootstrap-svg/*": ["node_modules/bootstrap-icons/icons/*"]
+      "@bootstrap-svg/*": ["node_modules/bootstrap-icons/icons/*"],
+      "@public/*": ["public/*"]
     }
   }
 }
