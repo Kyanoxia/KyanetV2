@@ -7,7 +7,7 @@ export async function GET({ params, request }: APIContext) {
             "client_id": "https://kyanoxia.com/oauth/client-metadata.json",
             "client_name": "Kyanet Dev Env",
             "client_uri": "https://kyanoxia.com/",
-            "logo_uri": "https://dtmunity.com/DTM_SQR.png",
+            "logo_uri": "https://kyanoxia.com/favicon.svg",
             "tos_uri": "https://kyanoxia.com/",
             "policy_uri": "https://kyanoxia.com/",
             "redirect_uris": [

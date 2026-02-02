@@ -5,7 +5,8 @@
     interpolate-size: allow-keywords;
 
     --color-bg: #01110a;
-    --color-fg: #002c1655;
+    --color-accent: #163324;
+    --color-accent-light: #214b35;
     --color-primary: #73ba9b;
     --color-light: #d5f2e3;
     --color-warn: #ba2d0b;
@@ -24,6 +25,26 @@
     padding: 0;
 
     box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-width: 0;
+}
+
+img.emoji {
+    display: inline !important;
+    border: none !important;
+    box-shadow: none !important;
+    height: 1em !important;
+    width: 1em !important;
+    margin: 0 .07em !important;
+    vertical-align: -0.1em !important;
+    background: none !important;
+    padding: 0 !important;
+    pointer-events: none;
 }
 
 .bold {

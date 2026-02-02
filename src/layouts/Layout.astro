@@ -46,25 +46,18 @@ const canonicalUrl = new URL(Astro.url.pathname, import.meta.env.SITE).href;
 
 		<script is:inline src="https://kit.fontawesome.com/6a9ec12e2e.js" crossorigin="anonymous" />
 		<script src="jarallax/dist/jarallax.min.js" />
+		<script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js" crossorigin="anonymous" />
 	</head>
 	<body>
 		<slot />
 		<KFooter page={props.title} color="#000000"></KFooter>
 	</body>
+
+	<script is:inline>
+		window.onload = function() {    
+            twemoji.parse(document.body, 
+                    {folder: 'svg', ext: '.svg'}
+            );
+        }
+	</script>
 </html>
-
-<style>
-	* {
-		margin: 0;
-		padding: 0;
-
-		box-sizing: border-box;
-	}
-
-	body {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-		min-width: 0;
-	}
-</style>

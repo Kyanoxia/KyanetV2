@@ -1,0 +1,83 @@
+---
+import { AtUri } from '@atproto/api'
+
+interface Props {
+    nsid: string;
+    repo: string;
+}
+
+const { nsid, repo } = Astro.props;
+
+const res = await fetch(
+    `https://blewit.us-west.host.bsky.network/xrpc/com.atproto.repo.listRecords?repo=${repo}&collection=${nsid}&limit=3`,
+);
+const data = await res.json();
+var records = data.records;
+---
+
+<div class="atlist">
+    {
+        records.map((
+            record: {
+                uri: string;
+                value: {
+                    text: string,
+                    createdAt: string
+                }
+            }) => (
+            <a class="card vstack" href={ `https://bsky.app/profile/${repo}/post/${new AtUri(record.uri).rkey}` }>
+                <span style="text-align: left;">{record.value.text}</span>
+                <div class="info">
+                    <sub>
+                        {function () {
+                            const date = new Date(record.value.createdAt);
+
+                            const ret =
+                                date.toLocaleDateString(undefined, {
+                                    weekday: "long",
+                                }) +
+                                " " +
+                                date.toLocaleDateString(undefined, {
+                                    month: "long",
+                                }) +
+                                " " +
+                                date.getDate() +
+                                ", " +
+                                date.getFullYear();
+
+                            return ret;
+                        }}
+                    </sub>
+                </div>
+            </a>
+        ))
+    }
+    <style>
+        .atlist {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info {
+            color: var(--color-light);
+        }
+
+        .atlist a {
+            background-color: var(--color-accent);
+            border-radius: 1rem;
+            overflow: hidden;
+
+            padding: 1rem;
+
+            gap: 1rem;
+        }
+
+        .atlist a span {
+            background-color: var(--color-accent-light);
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        
+    </style>
+</div>

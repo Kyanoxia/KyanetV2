@@ -5,7 +5,12 @@ body {
 h2 {
     color: var(--color-light);
     font-weight: 100;
-    margin: 0;
+    margin: unset;
+}
+
+p {
+    color: var(--color-primary);
+    font-weight: 200;
 }
 
 a {

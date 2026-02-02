@@ -5,7 +5,7 @@ import { getAverageColor } from 'fast-average-color-node';
 export async function GET(context: APIContext) {
     const inv = "DVvGFXqpqH";
 
-        if (context.request.headers.get("user-agent")?.includes("bot", 0) || true) {
+        if (context.request.headers.get("user-agent")?.includes("bot", 0)) {
             // Await response and convert to json before continuing
             const res = await fetch(`https://discord.com/api/v10/invites/${inv}`);
             const data = await res.json();
@@ -59,5 +59,5 @@ export async function GET(context: APIContext) {
             });
         }
 
-        //return Response.redirect(new URL(`https://discord.com/invite/${inv}`), 302)
+        return Response.redirect(new URL(`https://discord.com/invite/${inv}`), 302)
 }

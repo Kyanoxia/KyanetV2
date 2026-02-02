@@ -14,7 +14,7 @@ import "../styles/index.css";
 
 /*         COMPONENTS        */
 import ATProto from "~/components/ATProto.astro";
-import KCard from "~/components/KCard.astro";
+import ATList from "~/components/ATList.astro";
 
 const enOrdinalRules = new Intl.PluralRules("en-US", { type: "ordinal" });
 
@@ -90,10 +90,7 @@ const formatOrdinals = (n: number) => {
     </script>
     <div class="page-content">
         <div class="navbar">
-            <a
-                href="http://bsky.app/profile/did:plc:cocpebhxzqhh2vxsp4ivzdbr/"
-                class="profileimage"
-            >
+            <a href="http://bsky.app/profile/did:plc:cocpebhxzqhh2vxsp4ivzdbr/" class="profileimage">
                 <img src="/api/getProfileImage" alt="Bluesky Profile Image" />
             </a>
             <div class="navlinks">
@@ -137,18 +134,22 @@ const formatOrdinals = (n: number) => {
                 </li>
             </ul>
         </div>
-        <div class="work">
-            <h2>What I'm Working On</h2>
-            <span class="subheader">Click each card to go to its homepage</span>
-            <div class="cards">
-                <KCard title="Orchid" subtitle="A Discord Bot" src="https://github.com/Kyanoxia/orchid/blob/main/assets/Logo.png?raw=true" href="https://github.com/kyanoxia/orchid" color="var(--color-fg)"/>
-                <KCard title="DTMunity" subtitle="Desktop Music Unity" src="https://dtmunity.com/_astro/DTM_SQR.CswDl6_1.png" href="https://dtmunity.com/" color="var(--color-fg)"/>
-                <KCard title="ATProto Things" subtitle="Nuggets of Wisdom" src="https://old.kyanoxia.com/img/portfolio/render/deck.png" href="https://bsky.app/profile/did:plc:cocpebhxzqhh2vxsp4ivzdbr" color="var(--color-fg)"/>
+        <div class="section">
+            <div class="header">
+                <h2>At a Glance</h2>
+                <span class="subheader">My last few Atmosphere interactions - click to see more</span>
             </div>
+            <ATList nsid="app.bsky.feed.post" repo="did:plc:cocpebhxzqhh2vxsp4ivzdbr"/>
         </div>
-        <span style="color: #73ba9b; font-size: small; margin-bottom: 1rem;"
-            >This button won't do anything and is there only to test OAuth</span
-        >
-        <ATProto className="atp-login" style="align-self: center" />
+        <!--<<span style="color: #73ba9b; font-size: small; margin-bottom: 1rem;">This button won't do anything and is there only to test OAuth</span>
+        <ATProto className="atp-login" style="align-self: center" />-->
+
+        <div class="section">
+            <div class="header">
+                <h2>For Employers</h2>
+                <span class="subheader">Stuff you should know, as this isn't a professional resume</span>
+            </div>
+            <p>I'm a "shitposter" as hobby.  What you see on this site does not represent anything that I may bring to the table in a professional environment.<br><br><br><br>Unless you want that, in which case I can definitely do that in a professional environment, but it's unlikely you would.</p>
+        </div>
     </div>
 </Layout>
