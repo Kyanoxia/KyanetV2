@@ -3,7 +3,7 @@ import type { APIContext } from 'astro';
 import { getAverageColor } from 'fast-average-color-node';
 
 export async function GET(context: APIContext) {
-    const inv = "DVvGFXqpqH";
+    const inv = "sDXQWQPeMA";
 
         if (context.request.headers.get("user-agent")?.includes("bot", 0)) {
             // Await response and convert to json before continuing
